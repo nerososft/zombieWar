@@ -1,0 +1,58 @@
+﻿生成启动时间为 2016/5/25 13:23:58。
+     1>项目“F:\game project opengl\Nengine\ZombieWar\ZombieWar.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         F:\visualstudio2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MainGame.cpp mian.cpp
+         MainGame.cpp
+     1>f:\game project opengl\nengine\zombiewar\gun.h(12): warning C4244: “return”: 从“const int”转换到“float”，可能丢失数据
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(22): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(67): warning C4244: “参数”: 从“time_t”转换到“unsigned long”，可能丢失数据
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(85): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(94): warning C4305: “参数”: 从“double”到“float”截断
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(125): warning C4244: “初始化”: 从“float”转换到“const int”，可能丢失数据
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(130): warning C4244: “初始化”: 从“Uint32”转换到“float”，可能丢失数据
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(133): warning C4244: “初始化”: 从“Uint32”转换到“float”，可能丢失数据
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(166): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(174): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(176): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(202): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(234): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(239): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(243): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(244): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(249): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(251): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(255): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(301): warning C4244: “参数”: 从“Sint32”转换到“float”，可能丢失数据
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(334): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(339): warning C4018: “<”: 有符号/无符号不匹配
+     1>f:\game project opengl\nengine\zombiewar\maingame.cpp(345): warning C4018: “<”: 有符号/无符号不匹配
+         正在生成代码...
+         正在编译...
+         mian.cpp
+         正在生成代码...
+       Link:
+         F:\visualstudio2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\game project opengl\Nengine\Debug\ZombieWar.exe" /INCREMENTAL /NOLOGO SDL2.lib SDL2main.lib opengl32.lib glew32.lib NeroEngine.lib SDL2_mixer.lib SDL2_ttf.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\game project opengl\Nengine\Debug\ZombieWar.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\game project opengl\Nengine\Debug\ZombieWar.lib" /MACHINE:X86 Debug\Agent.obj
+         Debug\Bullet.obj
+         Debug\Gun.obj
+         Debug\Human.obj
+         Debug\Level.obj
+         Debug\MainGame.obj
+         Debug\mian.obj
+         Debug\Player.obj
+         Debug\Zombie.obj
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_Init，该符号在函数 "public: void __thiscall NeroEngine::AudioEngine::init(void)" (?init@AudioEngine@NeroEngine@@QAEXXZ) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_Quit，该符号在函数 "public: void __thiscall NeroEngine::AudioEngine::destroy(void)" (?destroy@AudioEngine@NeroEngine@@QAEXXZ) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_OpenAudio，该符号在函数 "public: void __thiscall NeroEngine::AudioEngine::init(void)" (?init@AudioEngine@NeroEngine@@QAEXXZ) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_LoadWAV_RW，该符号在函数 "public: class NeroEngine::SoundEffect __thiscall NeroEngine::AudioEngine::loadSoundEffect(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadSoundEffect@AudioEngine@NeroEngine@@QAE?AVSoundEffect@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_LoadMUS，该符号在函数 "public: class NeroEngine::Music __thiscall NeroEngine::AudioEngine::loadMusic(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadMusic@AudioEngine@NeroEngine@@QAE?AVMusic@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_PlayChannelTimed，该符号在函数 "public: void __thiscall NeroEngine::SoundEffect::play(int)" (?play@SoundEffect@NeroEngine@@QAEXH@Z) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_PlayMusic，该符号在函数 "public: void __thiscall NeroEngine::Music::play(int)" (?play@Music@NeroEngine@@QAEXH@Z) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_HaltMusic，该符号在函数 "public: static void __cdecl NeroEngine::Music::stop(void)" (?stop@Music@NeroEngine@@SAXXZ) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_PauseMusic，该符号在函数 "public: static void __cdecl NeroEngine::Music::pause(void)" (?pause@Music@NeroEngine@@SAXXZ) 中被引用
+     1>NeroEngine.lib(AudioEngine.obj) : error LNK2019: 无法解析的外部符号 _Mix_ResumeMusic，该符号在函数 "public: static void __cdecl NeroEngine::Music::resume(void)" (?resume@Music@NeroEngine@@SAXXZ) 中被引用
+     1>F:\game project opengl\Nengine\Debug\ZombieWar.exe : fatal error LNK1120: 10 个无法解析的外部命令
+     1>已完成生成项目“F:\game project opengl\Nengine\ZombieWar\ZombieWar.vcxproj”(Build 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:02.84
