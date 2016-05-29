@@ -15,6 +15,5 @@ public:
 
 	private:
 		int _frames;
-		glm::vec2 _direction;
 };
 

@@ -96,17 +96,17 @@ void Player::update(const std::vector<std::string>& levelData,
 	if (_inputManager->isKeyPressed(SDLK_w)){
 		_position.y += _speed*deltaTime;
 		
-			playSound("walk");///<<<<<<此方式冗余，需优化
+			//playSound("walk");///<<<<<<此方式冗余，需优化
 		
 	}else if (_inputManager->isKeyPressed(SDLK_s)){
 		_position.y -= _speed*deltaTime;
-		playSound("walk");///<
+		//playSound("walk");///<
 	}
 	if (_inputManager->isKeyPressed(SDLK_a)){
-		playSound("walk");///<
+		//playSound("walk");///<
 		_position.x -= _speed*deltaTime;
 	}else if (_inputManager->isKeyPressed(SDLK_d)){
-		playSound("walk");///<
+		//playSound("walk");///<
 		_position.x += _speed*deltaTime;
 	}
 	else if (_inputManager->isKeyPressed(SDLK_ESCAPE)){
@@ -130,18 +130,18 @@ void Player::update(const std::vector<std::string>& levelData,
 		playSound("changeGun");///<
 		_currentGunIndex = 3;
 	}
+	glm::vec2 mouseCoords = _inputManager->getMouseCoords();
+	mouseCoords = _camera->convertScreenToWorld(mouseCoords);
+
+	glm::vec2 centerPosition = _position + glm::vec2(AGENT_RADIUS);
+	_direction = glm::normalize(mouseCoords - centerPosition);
 
 	if (_currentGunIndex!=-1){
-		glm::vec2 mouseCoords = _inputManager->getMouseCoords();
 		
-		mouseCoords = _camera->convertScreenToWorld(mouseCoords);
 
-		glm::vec2 centerPosition = _position + glm::vec2(AGENT_RADIUS);
-		
-		glm::vec2 direction = glm::normalize(mouseCoords - centerPosition);
 		
 		_guns[_currentGunIndex]->update(_inputManager->isKeyPressed(SDL_BUTTON_LEFT),
-			centerPosition,direction,*_bullets,deltaTime);
+			centerPosition,_direction,*_bullets,deltaTime);
 	}
 
 	collideWithLevel(levelData);

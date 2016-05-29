@@ -9,8 +9,12 @@
 #include <NeroEngine\Errors.h>
 #include "Gun.h"
 #include <NeroEngine\SpriteFont.h>
+#include <NeroEngine\ParticleBatch2D.h>
+#include <NeroEngine\ResourceManager.h>
+#include <glm\gtx\rotate_vector.hpp>
 #include <algorithm>
 #include <GL\glut.h>
+#include "light2D.h"
 
 MainGame::MainGame() :
 _screenWidth(640), 
@@ -48,6 +52,10 @@ void MainGame::initSystems(){
 	//camera初始化
 	_camera.init(_screenWidth,_screenHeight);
 	
+	_bloodParticlesBatch = new NeroEngine::ParticleBatch2D;
+	_bloodParticlesBatch->init(1000, 0.05f, NeroEngine::ResourceManager::getTexture("Textures/blood.png"));
+
+	_particleEngine.addParticleBatch(_bloodParticlesBatch);
 
 }
 
@@ -58,6 +66,12 @@ void MainGame::initShaders(){
 	_textureProgram.addAttribute("vertexColor");
 	_textureProgram.addAttribute("vertexUV");
 	_textureProgram.linkShaders();
+
+	_lightProgram.complieShaders("Shaders/lightShading.vert", "Shaders/lightShading.frag");
+	_lightProgram.addAttribute("vertexPosition");
+	_lightProgram.addAttribute("vertexColor");
+	_lightProgram.addAttribute("vertexUV");
+	_lightProgram.linkShaders();
 }
 void MainGame::initLevel(){
 	//第一关地图
@@ -67,7 +81,7 @@ void MainGame::initLevel(){
 	std::map<std::string, NeroEngine::SoundEffect> playerSoundMap;
 	playerSoundMap["zombie"] = _audioEngine.loadSoundEffect("Sound/zombie.mp3");
 	playerSoundMap["changeGun"] = _audioEngine.loadSoundEffect("Sound/oog/changeGun.ogg");
-	playerSoundMap["walk"] = _audioEngine.loadSoundEffect("Sound/oog/walk.ogg");
+	//playerSoundMap["walk"] = _audioEngine.loadSoundEffect("Sound/oog/walk.ogg");
 	_player = new Player();
 
 	_player->init(PLAYER_SPEED, 
@@ -107,6 +121,10 @@ void MainGame::initLevel(){
 	_player->addGun(new Gun("雷蛇", 60, 10, 0.6f, 30, BULLET_SPEED,_audioEngine.loadSoundEffect("Sound/oog/M4_Head1.ogg")));
 	_player->addGun(new Gun("死亡之眼", 5, 5, 0.05f, 2, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Auto3.ogg")));
 	_player->addGun(new Gun("灭绝之刃", 1, 800, 4.0f, 0.1, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Tail1.ogg")));
+
+	
+	
+
 
 }
 
@@ -167,6 +185,7 @@ void MainGame::gameLoop(){
 			i++;
 		}
 		
+		_particleEngine.update(_deltaTime);
 
 		_camera.setPosition(_player->getAgentPos());
 
@@ -194,7 +213,7 @@ void MainGame::updateBullet(float deltaTime){
 		for (int j = 0; j < _zombies.size();){
 			//打僵尸
 			if (_bullets[i].collideWithAgent(_zombies[j])){
-
+				addBlood(_zombies[j]->getAgentPos(), 20);///<我曹，冒血了
 				if (_zombies[j]->applyDamage(_bullets[i].getDamge())){
 					//僵尸消失
 					delete _zombies[j];
@@ -220,7 +239,7 @@ void MainGame::updateBullet(float deltaTime){
 			for (int j = 1; j < _humans.size();){
 				//打人啦
 				if (_bullets[i].collideWithAgent(_humans[j])){
-
+					addBlood(_humans[j]->getAgentPos(),20);///<冒血了
 					if (_humans[j]->applyDamage(_bullets[i].getDamge())){
 						//人消失
 						delete _humans[j];
@@ -339,7 +358,7 @@ void MainGame::drawGame(){
 
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(22/255.0f,146/255.0f,253/255.0f, 1.0f);
+	glClearColor(0.0f,0.0f,0.0f, 1.0f);
 	_textureProgram.use();
 
 	glActiveTexture(GL_TEXTURE0);
@@ -352,9 +371,9 @@ void MainGame::drawGame(){
 	glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
 
 	_levels[_currentLevel]->draw();
-
-	
 	_agentSpriteBatch.begin();
+	_particleEngine.draw(&_agentSpriteBatch);
+
 
 	const glm::vec2 agentDemisions = glm::vec2(AGENT_RADIUS*2);
 	for (int i = 0; i < _humans.size();i++){
@@ -375,11 +394,52 @@ void MainGame::drawGame(){
 	}
 
 	
-
+	
 	_agentSpriteBatch.end();
 	_agentSpriteBatch.renderBatch();
 
 
 	_textureProgram.unuse();
+
+	
+	NeroEngine::Color color;
+	color.r = 255;
+	color.g = 255;
+	color.b = 255;
+	color.a = 200;
+	
+	_playerLight._color = color;
+	_playerLight._position = _player->getAgentPos()+AGENT_RADIUS;
+	_playerLight._size = 300.0f;
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	_lightProgram.use();
+	pUniform = _lightProgram.getUniformLocation("P");
+	glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
+
+	_agentSpriteBatch.begin();
+
+	_playerLight.draw(_agentSpriteBatch);
+	_agentSpriteBatch.end();
+	_agentSpriteBatch.renderBatch();
+	_lightProgram.unuse();
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	_window.swapBuffer();
+}
+void MainGame::addBlood(const glm::vec2& position, int numParticles){
+	static std::mt19937 randEngine(time(nullptr));
+	static std::uniform_real_distribution<float> randAngle(0.0f, 360.0f);
+	glm::vec2 vel(1.0f, 0.0f);
+
+	vel = glm::rotate(vel, randAngle(randEngine));
+
+	NeroEngine::Color color;
+	color.r = 255;
+	color.g = 0;
+	color.b = 0;
+	color.a = 128;
+	for (int i = 0; i < numParticles;i++){
+		_bloodParticlesBatch->addParticle(position, vel, color, 6.0f);
+
+	}
 }

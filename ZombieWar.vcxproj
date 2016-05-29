@@ -94,6 +94,7 @@
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Light2D.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Zombie.h" />
@@ -111,6 +112,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Shaders\lightShading.frag" />
+    <None Include="Shaders\lightShading.vert" />
     <None Include="Shaders\textureShading.frag" />
     <None Include="Shaders\textureShading.vert" />
   </ItemGroup>

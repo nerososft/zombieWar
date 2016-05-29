@@ -1,10 +1,27 @@
-﻿生成启动时间为 2016/5/26 0:18:31。
+﻿生成启动时间为 5/29/2016 6:40:02 PM。
      1>项目“F:\game project opengl\Nengine\ZombieWar\ZombieWar.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         F:\visualstudio2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /FR"Release\\" /Gd /TP /analyze- /errorReport:prompt Agent.cpp
-         Agent.cpp
-     1>Agent.cpp(48): warning C4018: “<”: 有符号/无符号不匹配
-     1>Agent.cpp(99): warning C4244: “参数”: 从“float”转换到“unsigned int”，可能丢失数据
+         F:\visualstudio2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /FR"Release\\" /Gd /TP /analyze- /errorReport:prompt MainGame.cpp
+         MainGame.cpp
+     1>f:\game project opengl\nengine\zombiewar\Gun.h(19): warning C4244: “return”: 从“const int”转换到“float”，可能丢失数据
+     1>f:\game project opengl\nengine\neroengine\GLTexture.h(4): warning C4099: “NeroEngine::GLTexture”: 类型名称以前使用“class”现在使用的是“struct”
+                 F:\game project opengl\Nengine\NeroEngine\SpriteFont.h(15) : 参见“NeroEngine::GLTexture”的声明
+     1>MainGame.cpp(33): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(114): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(203): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(211): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(213): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(239): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(271): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(276): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(280): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(281): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(286): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(288): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(292): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(379): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(384): warning C4018: “<”: 有符号/无符号不匹配
+     1>MainGame.cpp(390): warning C4018: “<”: 有符号/无符号不匹配
        Link:
          F:\visualstudio2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\game project opengl\Nengine\Release\ZombieWar.exe" /INCREMENTAL:NO /NOLOGO SDL2.lib SDL2main.lib opengl32.lib glew32.lib NeroEngine.lib SDL2_mixer.lib SDL2_ttf.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\game project opengl\Nengine\Release\ZombieWar.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\game project opengl\Nengine\Release\ZombieWar.lib" /MACHINE:X86 /SAFESEH /SAFESEH:NO Release\Agent.obj
          Release\Bullet.obj
@@ -24,4 +41,4 @@
 
 生成成功。
 
-已用时间 00:00:05.54
+已用时间 00:00:06.41

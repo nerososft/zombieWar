@@ -30,8 +30,8 @@ void Zombie::update(const std::vector<std::string>& levelData,
 	float deltaTime ){
 	Human* cloestHuman = getNerestHuman(humans);
 	if (cloestHuman!=nullptr){
-		glm::vec2 direction = glm::normalize(cloestHuman->getAgentPos() - _position);
-		_position += direction*_speed*deltaTime;
+		_direction = glm::normalize(cloestHuman->getAgentPos() - _position);
+		_position += _direction*_speed*deltaTime;
 	}
 
 	collideWithLevel(levelData);

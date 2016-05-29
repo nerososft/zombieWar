@@ -6,13 +6,16 @@
 #include <NeroEngine\Timing.h>
 #include <NeroEngine\SpriteBatch.h>
 #include <NeroEngine\AudioEngine.h>
+#include <NeroEngine\ParticleEngine2D.h>
 #include "Player.h"
 #include "Bullet.h"
 #include "Level.h"
+#include "Light2D.h"
 class Zombie;
 const float HUMAN_SPEED = 1.0f;
 const float ZOMBIE_SPEED = 0.5f;
 const float PLAYER_SPEED = 5.0f;
+const float PI = 3.14159926f;
 enum  class GameState
 {
 	PLAY,
@@ -45,17 +48,26 @@ private:
 
 	void drawGame();
 
+	void addBlood(const glm::vec2& position,int numParticles);
+
 	NeroEngine::Window _window;
 
 	NeroEngine::GLSLProgram _textureProgram;
+	NeroEngine::GLSLProgram _lightProgram;
 
 	NeroEngine::InputManager _inputManager;
 
 	NeroEngine::Camera2D _camera;
 
 	NeroEngine::SpriteBatch _agentSpriteBatch;
+	NeroEngine::ParticleEngine2D _particleEngine;
+	NeroEngine::ParticleBatch2D* _bloodParticlesBatch;
 
 	NeroEngine::AudioEngine _audioEngine;
+
+
+
+	Light2D _playerLight;
 
 	std::vector<Level*> _levels;
 
@@ -72,6 +84,7 @@ private:
 	std::vector<Human*> _humans;
 	std::vector<Zombie*> _zombies;
 	std::vector<Bullet> _bullets;
+
 
 
 	int _numHumKilled;

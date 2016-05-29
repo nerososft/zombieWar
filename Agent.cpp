@@ -18,7 +18,7 @@ void Agent::draw(NeroEngine::SpriteBatch& spriteBatch){
 	destRect.z = AGENT_WIDTH;
 	destRect.w = AGENT_WIDTH;
 	
-	spriteBatch.draw(destRect,uvRect,textureId, 0.0f,_color);
+	spriteBatch.draw(destRect,uvRect,textureId, 0.0f,_color,_direction);
 }
 bool Agent::collideWithLevel(const std::vector<std::string>& levelData){
 	std::vector<glm::vec2> collideTilePosition;
@@ -93,6 +93,7 @@ void Agent::checkTilePosition(const std::vector<std::string>& levelData,
 	//³¬³öµØÍ¼±ß½ç
 	if (cornerPos.x<0||cornerPos.x>levelData[0].size()||
 		cornerPos.y<0||cornerPos.y>levelData.size()){
+
 		return;
 	}
 

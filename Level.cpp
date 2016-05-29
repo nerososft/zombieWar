@@ -35,9 +35,9 @@ Level::Level(const std::string& fileName)
 	glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
 	NeroEngine::Color whiteColor;
 	whiteColor.a = 255;
-	whiteColor.r = 255;
-	whiteColor.g = 255;
-	whiteColor.b = 255;
+	whiteColor.r = 50;
+	whiteColor.g = 50;
+	whiteColor.b = 50;
 	for (int y = 0; y < _levelData.size();y++){
 		for (int x = 0; x < _levelData[y].size();x++){
 			char tile = _levelData[y][x];
