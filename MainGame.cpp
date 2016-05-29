@@ -202,7 +202,13 @@ void MainGame::updateBullet(float deltaTime){
 	//=打墙
 	for (int i = 0; i < _bullets.size();i++){
 		//打墙上了
+		
 		if (_bullets[i].update(_levels[_currentLevel]->getLevelData(), _deltaTime)){
+			_bloodColor.r = 139;
+			_bloodColor.g = 170;
+			_bloodColor.b = 102;
+			_bloodColor.a = 128;
+			addBlood(_bullets[i].getPosition(), 10,3.0f);///<我曹，冒血了
 			_bullets[i] = _bullets.back();
 			_bullets.pop_back();
 		}
@@ -213,7 +219,11 @@ void MainGame::updateBullet(float deltaTime){
 		for (int j = 0; j < _zombies.size();){
 			//打僵尸
 			if (_bullets[i].collideWithAgent(_zombies[j])){
-				addBlood(_zombies[j]->getAgentPos(), 20);///<我曹，冒血了
+				_bloodColor.r = 139;
+				_bloodColor.g = 0;
+				_bloodColor.b = 0;
+				_bloodColor.a = 128;
+				addBlood(_zombies[j]->getAgentPos(), 20,6.0f);///<我曹，冒血了
 				if (_zombies[j]->applyDamage(_bullets[i].getDamge())){
 					//僵尸消失
 					delete _zombies[j];
@@ -239,7 +249,11 @@ void MainGame::updateBullet(float deltaTime){
 			for (int j = 1; j < _humans.size();){
 				//打人啦
 				if (_bullets[i].collideWithAgent(_humans[j])){
-					addBlood(_humans[j]->getAgentPos(),20);///<冒血了
+					_bloodColor.r = 139;
+					_bloodColor.g = 0;
+					_bloodColor.b = 0;
+					_bloodColor.a = 128;
+					addBlood(_humans[j]->getAgentPos(),20,6.0f);///<冒血了
 					if (_humans[j]->applyDamage(_bullets[i].getDamge())){
 						//人消失
 						delete _humans[j];
@@ -426,20 +440,15 @@ void MainGame::drawGame(){
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	_window.swapBuffer();
 }
-void MainGame::addBlood(const glm::vec2& position, int numParticles){
+void MainGame::addBlood(const glm::vec2& position, int numParticles,const float width){
 	static std::mt19937 randEngine(time(nullptr));
 	static std::uniform_real_distribution<float> randAngle(0.0f, 360.0f);
 	glm::vec2 vel(1.0f, 0.0f);
 
 	vel = glm::rotate(vel, randAngle(randEngine));
 
-	NeroEngine::Color color;
-	color.r = 255;
-	color.g = 0;
-	color.b = 0;
-	color.a = 128;
-	for (int i = 0; i < numParticles;i++){
-		_bloodParticlesBatch->addParticle(position, vel, color, 6.0f);
 
+	for (int i = 0; i < numParticles;i++){
+		_bloodParticlesBatch->addParticle(position, vel, _bloodColor, width);
 	}
 }

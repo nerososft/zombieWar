@@ -17,6 +17,8 @@ public:
 	void draw(NeroEngine::SpriteBatch& spriteBatch);
 
 	bool collideWithAgent(Agent* agent);
+
+	glm::vec2 getPosition(){ return _position; }
 private:
 	bool collideWithWorld(const std::vector<std::string>& levelData);
 	float _damage;

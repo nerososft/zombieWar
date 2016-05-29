@@ -48,7 +48,7 @@ private:
 
 	void drawGame();
 
-	void addBlood(const glm::vec2& position,int numParticles);
+	void addBlood(const glm::vec2& position, int numParticles, const float width);
 
 	NeroEngine::Window _window;
 
@@ -91,6 +91,7 @@ private:
 	int _numZombieKilled;
 
 
+	NeroEngine::Color _bloodColor;
 	float _deltaTime = 1.0f;
 
 
