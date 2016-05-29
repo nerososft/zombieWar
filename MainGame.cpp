@@ -223,7 +223,7 @@ void MainGame::updateBullet(float deltaTime){
 				_bloodColor.g = 0;
 				_bloodColor.b = 0;
 				_bloodColor.a = 128;
-				addBlood(_zombies[j]->getAgentPos(), 20,6.0f);///<我曹，冒血了
+				addBlood(_zombies[j]->getAgentPos(), 20,30.0f);///<我曹，冒血了
 				if (_zombies[j]->applyDamage(_bullets[i].getDamge())){
 					//僵尸消失
 					delete _zombies[j];
@@ -253,7 +253,7 @@ void MainGame::updateBullet(float deltaTime){
 					_bloodColor.g = 0;
 					_bloodColor.b = 0;
 					_bloodColor.a = 128;
-					addBlood(_humans[j]->getAgentPos(),20,6.0f);///<冒血了
+					addBlood(_humans[j]->getAgentPos(),20,30.0f);///<冒血了
 					if (_humans[j]->applyDamage(_bullets[i].getDamge())){
 						//人消失
 						delete _humans[j];
@@ -326,6 +326,7 @@ void MainGame::updateAgent(float deltaTime){
 			//此处需要修改
 			if (_player->applyDamage(_zombies[i]->getDamage())){
 				//_audioEngine.loadSoundEffect("Sound/die.ogg").play();
+				addBlood(_player->getAgentPos(),10,50.0f);
 				NeroEngine::fatalError("你已被咬死！");
 			}
 		}
