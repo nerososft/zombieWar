@@ -1,4 +1,4 @@
-﻿生成启动时间为 5/30/2016 2:33:07 PM。
+﻿生成启动时间为 5/30/2016 2:40:10 PM。
      1>项目“F:\game project opengl\Nengine\ZombieWar\ZombieWar.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          F:\visualstudio2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /FR"Release\\" /Gd /TP /analyze- /errorReport:prompt MainGame.cpp
@@ -41,4 +41,4 @@
 
 生成成功。
 
-已用时间 00:00:06.11
+已用时间 00:00:06.07
