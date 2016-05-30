@@ -53,7 +53,11 @@ void MainGame::initSystems(){
 	_camera.init(_screenWidth,_screenHeight);
 	
 	_bloodParticlesBatch = new NeroEngine::ParticleBatch2D;
-	_bloodParticlesBatch->init(1000, 0.05f, NeroEngine::ResourceManager::getTexture("Textures/blood.png"));
+	_bloodParticlesBatch->init(1000, 0.05f,
+		NeroEngine::ResourceManager::getTexture("Textures/blood.png"),
+		[](NeroEngine::Particle2D& particle, float deltaTime){
+		particle._position += particle._velocity*deltaTime;
+	});
 
 	_particleEngine.addParticleBatch(_bloodParticlesBatch);
 
@@ -453,3 +457,4 @@ void MainGame::addBlood(const glm::vec2& position, int numParticles,const float 
 		_bloodParticlesBatch->addParticle(position, vel, _bloodColor, width);
 	}
 }
+
