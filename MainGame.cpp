@@ -53,11 +53,11 @@ void MainGame::initSystems(){
 	_camera.init(_screenWidth,_screenHeight);
 	const float BLOOD_WIDTH = 20.0f;
 	_bloodParticlesBatch = new NeroEngine::ParticleBatch2D;
-	_bloodParticlesBatch->init(1000, 0.05f,
+	_bloodParticlesBatch->init(1000, 0.045f,
 		NeroEngine::ResourceManager::getTexture("Textures/blood.png"),
 		[=](NeroEngine::Particle2D& particle, float deltaTime)->void{
 		particle._position += particle._velocity*deltaTime;
-		particle._color.r =255- (GLubyte)(particle._life * 255);
+		particle._color.r =255 - (GLubyte)(particle._life * 255);
 		particle._width = (float)(particle._life * BLOOD_WIDTH);
 	});
 
@@ -125,12 +125,8 @@ void MainGame::initLevel(){
 	const float BULLET_SPEED = 10.0f;
 	_player->addGun(new Gun("沙漠之鹰", 30, 1, 0.0f, 20, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/tuizi.mp3")));
 	_player->addGun(new Gun("雷蛇", 60, 10, 0.6f, 30, BULLET_SPEED,_audioEngine.loadSoundEffect("Sound/oog/M4_Head1.ogg")));
-	_player->addGun(new Gun("死亡之眼", 5, 5, 0.05f, 2, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Auto3.ogg")));
-	_player->addGun(new Gun("灭绝之刃", 1, 800, 4.0f, 0.1, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Tail1.ogg")));
-
-	
-	
-
+	_player->addGun(new Gun("死亡之眼", 5, 5, 0.03f, 4, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Auto3.ogg")));
+	_player->addGun(new Gun("辐射", 1, 800, 4.0f, 0.1, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Tail1.ogg")));
 
 }
 
@@ -332,8 +328,15 @@ void MainGame::updateAgent(float deltaTime){
 			//此处需要修改
 			if (_player->applyDamage(_zombies[i]->getDamage())){
 				//_audioEngine.loadSoundEffect("Sound/die.ogg").play();
+				_bloodColor.r = 139;
+				_bloodColor.g = 0;
+				_bloodColor.b = 0;
+				_bloodColor.a = 128;
 				addBlood(_player->getAgentPos(),10,50.0f);
-				NeroEngine::fatalError("你已被咬死！");
+				
+				_camera.setScale(2);
+				
+				//::fatalError("你已被咬死！");
 			}
 		}
 	}
@@ -450,7 +453,7 @@ void MainGame::drawGame(){
 void MainGame::addBlood(const glm::vec2& position, int numParticles,const float width){
 	static std::mt19937 randEngine(time(nullptr));
 	static std::uniform_real_distribution<float> randAngle(0.0f, 360.0f);
-	glm::vec2 vel(1.0f, 0.0f);
+	glm::vec2 vel(2.0f, 0.0f);
 
 	vel = glm::rotate(vel, randAngle(randEngine));
 
