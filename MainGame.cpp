@@ -55,8 +55,10 @@ void MainGame::initSystems(){
 	_bloodParticlesBatch = new NeroEngine::ParticleBatch2D;
 	_bloodParticlesBatch->init(1000, 0.05f,
 		NeroEngine::ResourceManager::getTexture("Textures/blood.png"),
-		[](NeroEngine::Particle2D& particle, float deltaTime){
+		[](NeroEngine::Particle2D& particle, float deltaTime)->void{
 		particle._position += particle._velocity*deltaTime;
+		particle._color.r = (GLubyte)(particle._life * 255);
+		particle._width = (float)(particle._life * 20);
 	});
 
 	_particleEngine.addParticleBatch(_bloodParticlesBatch);
