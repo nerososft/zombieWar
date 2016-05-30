@@ -96,6 +96,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="Light2D.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MiniMap.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
@@ -107,6 +108,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="mian.cpp" />
+    <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>

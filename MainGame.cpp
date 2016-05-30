@@ -17,8 +17,8 @@
 #include "light2D.h"
 
 MainGame::MainGame() :
-_screenWidth(640), 
-_screenHeight(480), 
+_screenWidth(800), 
+_screenHeight(600), 
 _gameState(GameState::PLAY), 
 _fps(0.0f), 
 _player(nullptr),
@@ -128,6 +128,8 @@ void MainGame::initLevel(){
 	_player->addGun(new Gun("死亡之眼", 5, 5, 0.03f, 4, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Auto3.ogg")));
 	_player->addGun(new Gun("辐射", 1, 800, 4.0f, 0.1, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Tail1.ogg")));
 
+
+	_miniMap.init(_camera.convertScreenToWorld(glm::vec2(300, 100)),_bloodColor, NeroEngine::ResourceManager::getTexture("Textures/blood.png"));
 }
 
 
@@ -157,7 +159,7 @@ void MainGame::gameLoop(){
 	NeroEngine::FpsLimter _fpsLimter;
 	_fpsLimter.setMaxFps(60.0f);
 
-	const float CAMERA_SCALA = 1.5f;
+	const float CAMERA_SCALA = 2.0f;
 	_camera.setScale(CAMERA_SCALA);
 	
 	const int  MAX_PHYSISC_STEPS = 1.0f;
@@ -231,6 +233,7 @@ void MainGame::updateBullet(float deltaTime){
 					delete _zombies[j];
 					_zombies[j] = _zombies.back();
 					_zombies.pop_back();
+					std::cout << "还有" << _zombies.size() << "个僵尸！" << std::endl;
 				}else{
 					j++;
 				}
@@ -281,6 +284,13 @@ void MainGame::updateBullet(float deltaTime){
 	}
 
 }
+void MainGame::updateMinimap(glm::vec2 pos){
+	_miniMap.setPosition(pos + glm::vec2(_screenWidth/4.0f-MINI_MAP_WIDTH,_screenHeight/4.0f-MINI_MAP_HEIGHT));
+	//std::cout << _miniMap._position.x << "-" << _miniMap._position.y << std::endl;
+
+}
+
+
 
 void MainGame::updateAgent(float deltaTime){
 	//更新人类
@@ -416,7 +426,9 @@ void MainGame::drawGame(){
 			_bullets[i].draw(_agentSpriteBatch);
 		
 	}
-
+	updateMinimap(_player->getAgentPos());
+	
+	_miniMap.draw(_agentSpriteBatch);
 	
 	
 	_agentSpriteBatch.end();

@@ -42,6 +42,9 @@
     <ClInclude Include="Light2D.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -69,6 +72,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

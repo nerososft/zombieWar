@@ -11,6 +11,7 @@
 #include "Bullet.h"
 #include "Level.h"
 #include "Light2D.h"
+#include "MiniMap.h"
 class Zombie;
 const float HUMAN_SPEED = 1.0f;
 const float ZOMBIE_SPEED = 0.5f;
@@ -50,6 +51,8 @@ private:
 
 	void addBlood(const glm::vec2& position, int numParticles, const float width);
 
+	void updateMinimap(glm::vec2 pos);
+
 	NeroEngine::Window _window;
 
 	NeroEngine::GLSLProgram _textureProgram;
@@ -68,6 +71,7 @@ private:
 
 
 	Light2D _playerLight;
+	MiniMap _miniMap;
 
 	std::vector<Level*> _levels;
 
