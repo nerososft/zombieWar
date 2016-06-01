@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <GL\glut.h>
 #include "light2D.h"
-
+#include "MiniAgent.h"
 MainGame::MainGame() :
 _screenWidth(800), 
 _screenHeight(600), 
@@ -51,10 +51,10 @@ void MainGame::initSystems(){
 	_agentSpriteBatch.init();
 	//camera初始化
 	_camera.init(_screenWidth,_screenHeight);
+
 	const float BLOOD_WIDTH = 20.0f;
 	_bloodParticlesBatch = new NeroEngine::ParticleBatch2D;
-	_bloodParticlesBatch->init(1000, 0.045f,
-		NeroEngine::ResourceManager::getTexture("Textures/blood.png"),
+	_bloodParticlesBatch->init(1000, 0.045f,NeroEngine::ResourceManager::getTexture("Textures/blood.png"),
 		[=](NeroEngine::Particle2D& particle, float deltaTime)->void{
 		particle._position += particle._velocity*deltaTime;
 		particle._color.r =255 - (GLubyte)(particle._life * 255);
@@ -62,26 +62,14 @@ void MainGame::initSystems(){
 	});
 
 	_particleEngine.addParticleBatch(_bloodParticlesBatch);
-
-}
-
-
-void MainGame::initShaders(){
-	_textureProgram.complieShaders("Shaders/textureShading.vert", "Shaders/textureShading.frag");
-	_textureProgram.addAttribute("vertexPosition");
-	_textureProgram.addAttribute("vertexColor");
-	_textureProgram.addAttribute("vertexUV");
-	_textureProgram.linkShaders();
-
-	_lightProgram.complieShaders("Shaders/lightShading.vert", "Shaders/lightShading.frag");
-	_lightProgram.addAttribute("vertexPosition");
-	_lightProgram.addAttribute("vertexColor");
-	_lightProgram.addAttribute("vertexUV");
-	_lightProgram.linkShaders();
+	
+	glm::vec2 mouseCoords = _inputManager.getMouseCoords();
+	mouseCoords = _camera.convertScreenToWorld(mouseCoords);
+	_gunsight.init(mouseCoords, _bloodColor, NeroEngine::ResourceManager::getTexture("Textures/tk.png"), 10.0f);
 }
 void MainGame::initLevel(){
 	//第一关地图
-	_levels.push_back(new Level("Levels/level1.txt"));
+	_levels.push_back(new Level("Levels/level1.nmap"));
 
 	_currentLevel = 0;
 	std::map<std::string, NeroEngine::SoundEffect> playerSoundMap;
@@ -112,6 +100,12 @@ void MainGame::initLevel(){
 	//添加人类
 	for (int i = 0; i < _levels[_currentLevel]->getNumHuman(); i++){
 		_humans.push_back(new Human);
+		
+		
+		_miniMap.addAgent();
+		_miniMap.getMinimapAgent()[i]->init(_bloodColor,_player->getAgentPos()+glm::vec2(10,10));
+		
+		
 		glm::vec2 pos(randX(randomEngine)*TILE_WIDTH, randY(randomEngine)*TILE_WIDTH);
 		_humans.back()->init(HUMAN_SPEED,pos);
 	}
@@ -125,15 +119,25 @@ void MainGame::initLevel(){
 	const float BULLET_SPEED = 10.0f;
 	_player->addGun(new Gun("沙漠之鹰", 30, 1, 0.0f, 20, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/tuizi.mp3")));
 	_player->addGun(new Gun("雷蛇", 60, 10, 0.6f, 30, BULLET_SPEED,_audioEngine.loadSoundEffect("Sound/oog/M4_Head1.ogg")));
-	_player->addGun(new Gun("死亡之眼", 5, 5, 0.03f, 4, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Auto3.ogg")));
-	_player->addGun(new Gun("辐射", 1, 800, 4.0f, 0.1, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Tail1.ogg")));
+	_player->addGun(new Gun("死亡之眼", 5, 2, 0.03f, 0.1, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Auto3.ogg")));
+	_player->addGun(new Gun("辐射", 8, 8, 0.3f, 0.1, BULLET_SPEED, _audioEngine.loadSoundEffect("Sound/oog/M4_Tail1.ogg")));
 
 
 	_miniMap.init(_camera.convertScreenToWorld(glm::vec2(300, 100)),_bloodColor, NeroEngine::ResourceManager::getTexture("Textures/blood.png"));
 }
+void MainGame::initShaders(){
+	_textureProgram.complieShaders("Shaders/textureShading.vert", "Shaders/textureShading.frag");
+	_textureProgram.addAttribute("vertexPosition");
+	_textureProgram.addAttribute("vertexColor");
+	_textureProgram.addAttribute("vertexUV");
+	_textureProgram.linkShaders();
 
-
-
+	_lightProgram.complieShaders("Shaders/lightShading.vert", "Shaders/lightShading.frag");
+	_lightProgram.addAttribute("vertexPosition");
+	_lightProgram.addAttribute("vertexColor");
+	_lightProgram.addAttribute("vertexUV");
+	_lightProgram.linkShaders();
+}
 //入口
 void MainGame::run(){
 
@@ -147,10 +151,13 @@ void MainGame::run(){
 	gameLoop();
 }
 void MainGame::checkVictory(){
-	//僵尸死关了
+	//zombie all died
 	if (_zombies.empty()){
 		std::cout << "mt19937病毒消失!" << std::endl;
-		std::cout << "还有" <<_humans.size()<<"名人类幸存！"<< std::endl;
+		std::cout << "at last" <<_humans.size()<<"human alive！"<< std::endl;
+
+		_camera.setScale(3);
+		
 		NeroEngine::fatalError("——NeroYang");
 	}
 }
@@ -185,6 +192,11 @@ void MainGame::gameLoop(){
 			_deltaTime = 1.0f;// std::min(totalDeltaTime, MAX_DETLA_TIME);
 			updateAgent(_deltaTime);
 			updateBullet(_deltaTime);
+			
+			//_miniMap.update([=](std::vector<Zombie*> zombies, std::vector<Human*> humans)->void{
+				
+			//});
+
 			totalDeltaTime += _deltaTime;
 			i++;
 		}
@@ -194,7 +206,7 @@ void MainGame::gameLoop(){
 		_camera.setPosition(_player->getAgentPos());
 
 		_camera.update();
-
+		
 		drawGame();
 
 		_fps = _fpsLimter.end();
@@ -228,6 +240,7 @@ void MainGame::updateBullet(float deltaTime){
 				_bloodColor.b = 0;
 				_bloodColor.a = 128;
 				addBlood(_zombies[j]->getAgentPos(), 20,30.0f);///<我曹，冒血了
+				_zombies[j]->setPosition(_zombies[j]->getAgentPos() + glm::vec2(_bullets[i].getDirection().x*2,_bullets[i].getDirection().y*2));
 				if (_zombies[j]->applyDamage(_bullets[i].getDamge())){
 					//僵尸消失
 					delete _zombies[j];
@@ -259,6 +272,8 @@ void MainGame::updateBullet(float deltaTime){
 					_bloodColor.b = 0;
 					_bloodColor.a = 128;
 					addBlood(_humans[j]->getAgentPos(),20,30.0f);///<冒血了
+					_humans[j]->setPosition(_humans[j]->getAgentPos() + glm::vec2(_bullets[i].getDirection().x * 2, _bullets[i].getDirection().y * 2));
+
 					if (_humans[j]->applyDamage(_bullets[i].getDamge())){
 						//人消失
 						delete _humans[j];
@@ -284,10 +299,8 @@ void MainGame::updateBullet(float deltaTime){
 	}
 
 }
-void MainGame::updateMinimap(glm::vec2 pos){
+void MainGame::updateMinimapPos(glm::vec2 pos){
 	_miniMap.setPosition(pos + glm::vec2(_screenWidth/4.0f-MINI_MAP_WIDTH,_screenHeight/4.0f-MINI_MAP_HEIGHT));
-	//std::cout << _miniMap._position.x << "-" << _miniMap._position.y << std::endl;
-
 }
 
 
@@ -325,7 +338,7 @@ void MainGame::updateAgent(float deltaTime){
 				_zombies.back()->init(ZOMBIE_SPEED, _humans[j]->getAgentPos());
 
 				//播放被僵尸感染音效
-				_audioEngine.loadSoundEffect("Sound/zombie.mp3").play();
+				//_audioEngine.loadSoundEffect("Sound/zombie.mp3").play();
 				
 
 				_humans[j] = _humans.back();
@@ -426,9 +439,31 @@ void MainGame::drawGame(){
 			_bullets[i].draw(_agentSpriteBatch);
 		
 	}
-	updateMinimap(_player->getAgentPos());
+
+	//瞄准镜
+	NeroEngine::Color gunsightColor;
+	gunsightColor.r = 255;
+	gunsightColor.g = 255;
+	gunsightColor.b = 255;
+	gunsightColor.a = 255;
+	glm::vec2 mouseCoords = _inputManager.getMouseCoords();
+	mouseCoords = _camera.convertScreenToWorld(mouseCoords);
+	_gunsight.update(mouseCoords - glm::vec2(10, 10), gunsightColor, NeroEngine::ResourceManager::getTexture("Textures/gunsight.png"), 20.0f);
+	_gunsight.draw(_agentSpriteBatch);
+
+	//更新小地图位置 
+	updateMinimapPos(_player->getAgentPos());
 	
+	//绘制小地图
 	_miniMap.draw(_agentSpriteBatch);
+	
+
+	//绘制小地图元素
+	for (int i = 0; i < _miniMap.getMinimapAgent().size();i++){
+		_miniMap.getMinimapAgent()[i]->setPosition(_player->getAgentPos() /*+ glm::vec2(10,10)*/);
+		_miniMap.getMinimapAgent()[i]->draw(_agentSpriteBatch);
+	}
+
 	
 	
 	_agentSpriteBatch.end();

@@ -5,6 +5,7 @@
 #include <NeroEngine\AudioEngine.h>
 #include "Bullet.h"
 #include <map>
+#include "GunSight.h"
 class Gun;
 class Player:public Human
 {
@@ -37,6 +38,7 @@ private:
 	NeroEngine::Camera2D* _camera;
 
 	std::map<std::string, NeroEngine::SoundEffect> _playerAudioEffectMap;
+	
 	
 
 	std::vector<Bullet>* _bullets;

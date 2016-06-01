@@ -4,6 +4,9 @@
 #include <NeroEngine\GLTexture.h>
 #include <NeroEngine\SpriteBatch.h>
 #include <functional>
+class MiniAgent;
+class Zombie;
+class Human;
 const float MINI_MAP_WIDTH = 100.0;
 const float MINI_MAP_HEIGHT = 40.0f;
 class MiniMap
@@ -13,12 +16,22 @@ public:
 
 	void draw(NeroEngine::SpriteBatch& spriteBatch);
 
-	void update(std::function<void(MiniMap minimap,glm::vec2 pos)> updateFunc);
+	void update(std::vector<Zombie*> zombies, std::vector<Human*> humans);
 
 	void setPosition(glm::vec2 pos){ _position = pos; }
+
+	glm::vec2 convertToMinimapMatrix(glm::vec2 Position,float screenWidth, float screenHeight);
+
+	void addAgent();
+
+	std::vector<MiniAgent*>& getMinimapAgent(){ return _agents; }
+
+	glm::vec2 getPosition() { return _position; }
+
 	MiniMap();
 
 	~MiniMap();
+private:
 
 
 	glm::vec2 _position;
@@ -27,9 +40,7 @@ public:
 
 	NeroEngine::GLTexture _texture;
 
-	
+	std::vector<MiniAgent*> _agents;
 
-
-	
 
 };

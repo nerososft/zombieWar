@@ -138,10 +138,10 @@ void Player::update(const std::vector<std::string>& levelData,
 
 	if (_currentGunIndex!=-1){
 		
-
+		//std::cout << _direction.x << "_" << _direction.y << ::std::endl;
 		
 		_guns[_currentGunIndex]->update(_inputManager->isKeyPressed(SDL_BUTTON_LEFT),
-			centerPosition,_direction,*_bullets,deltaTime);
+			centerPosition+(_direction.x*5.0f,_direction.y*5.0f),_direction,*_bullets,deltaTime);
 	}
 
 	collideWithLevel(levelData);

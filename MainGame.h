@@ -51,7 +51,7 @@ private:
 
 	void addBlood(const glm::vec2& position, int numParticles, const float width);
 
-	void updateMinimap(glm::vec2 pos);
+	void updateMinimapPos(glm::vec2 pos);
 
 	NeroEngine::Window _window;
 
@@ -72,6 +72,7 @@ private:
 
 	Light2D _playerLight;
 	MiniMap _miniMap;
+	GunSight _gunsight;
 
 	std::vector<Level*> _levels;
 

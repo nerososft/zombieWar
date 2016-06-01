@@ -33,6 +33,7 @@ private:
 
 	NeroEngine::SoundEffect _fireEffect;
 
+
 	int _fireRate;//
 
 	int _bulletPerShot;

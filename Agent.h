@@ -26,7 +26,7 @@ public:
 
 	glm::vec2 getAgentPos()const { return _position; }
 
-	
+	void setPosition(glm::vec2 pos){ _position = pos; }
 protected:
 	void checkTilePosition(const std::vector<std::string>& levelData,
 		std::vector<glm::vec2>& collideTilePosition,

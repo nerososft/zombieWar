@@ -90,24 +90,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="App.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="GamePlayScreen.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="GunSight.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Light2D.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MiniAgent.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="App.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="GamePlayScreen.cpp" />
     <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="GunSight.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="mian.cpp" />
+    <ClCompile Include="MiniAgent.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Zombie.cpp" />
@@ -120,7 +128,7 @@
     <None Include="Shaders\textureShading.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Levels\level1.txt" />
+    <Text Include="Levels\level1.nmap" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,7 +7,7 @@ Agent::Agent()
 {
 }
 void Agent::draw(NeroEngine::SpriteBatch& spriteBatch){
-	static GLuint textureId = NeroEngine::ResourceManager::getTexture("Textures/zombie.png").id;
+	static GLuint textureId = NeroEngine::ResourceManager::getTexture("Textures/zombie.ntex").id;
 	const glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
 	
 

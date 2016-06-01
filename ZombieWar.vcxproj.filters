@@ -24,9 +24,6 @@
     <ClInclude Include="Human.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Agent.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -43,6 +40,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MiniMap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayScreen.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniAgent.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GunSight.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,6 +89,18 @@
     <ClCompile Include="MiniMap.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayScreen.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniAgent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GunSight.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\textureShading.frag">
@@ -94,7 +118,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Levels\level1.txt">
+    <Text Include="Levels\level1.nmap">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>
